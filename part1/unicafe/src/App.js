@@ -13,6 +13,10 @@ const App = () => {
   const handleGoodClick = () => setGood(good + 1)
   const handleNeutralClick = () => setNeutral(neutral + 1)
   const handlebadClick = () => setBad(bad + 1)
+  const allFeedbacks = bad + neutral + good
+  const newArr = [bad,good,neutral]
+  const average = newArr.reduce((acc,curr) => acc + curr,0)/newArr.length
+  const positive = (good * 100) / newArr.reduce((acc,curr) => acc + curr,0) + '%'
 
   return (
     <div>
@@ -24,6 +28,9 @@ const App = () => {
       <Display name = 'Good' count ={good}/>
       <Display name = 'Neutral' count = {neutral} />  
       <Display name = 'Bad' count = {bad} />  
+      <Display name = 'all'  count = {allFeedbacks}/>
+      <Display name = 'Average' count = {average} />
+      <Display name = 'Positive' count = {positive} />
     </div>
   )
 }
