@@ -1,18 +1,8 @@
-const Part = (props) => {
-  return (
-    <p>
-      {props.content} {props.newest}
-    </p>
-  );
-};
-
-const Content = (props) => {
-  return (
-    <>
-      <Part content ={props.name1} newest = {props.firstExercise} />
-      <Part content ={props.name2} newest = {props.secondExercise} />
-      <Part  content ={props.name3} newest = {props.thirdExercise}/>
-    </>
-  );
-};
-export default Content;
+ const Content = ({course}) => {
+    return(
+      <ul>
+        {course.parts.map(({name,id,exercises}) => <p key= {id}>{name} {exercises}</p>)}
+      </ul>
+    )
+ }
+ export default Content
