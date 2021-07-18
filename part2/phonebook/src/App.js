@@ -5,16 +5,14 @@ import Personform from "./components/Personform";
 import Persons from "./components/Persons";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "08032448513" },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [number, setNumber] = useState("");
   const [searchBy, setSearchBy] = useState("");
 
   useEffect(() => {
     axios.get(" http://localhost:3001/persons").then(({ data }) => {
-      setPersons(data)
+      setPersons(data);
     });
   }, []);
 
