@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+// import Button from "./components/Button";
 import Display from "./components/Display";
 import Input from "./components/Input";
 
@@ -10,7 +11,11 @@ const App = () => {
 
   useEffect(() => {
     axios.get("https://restcountries.eu/rest/v2/all").then(({ data }) => {
+
+      // console.log(toogleAdded)
+      // console.log(data)
       setCountry(data);
+      // console.log(country)
     });
   }, []);
 
@@ -22,12 +27,13 @@ const App = () => {
         name.toLowerCase().includes(change.toLocaleLowerCase())
       )
     );
+    // console.log(displayedCountry)
   };
-
+  
   return (
     <div>
       <Input displayedCountry={change} handleInputChange={handleInputChange} />
-      <Display displayedCountry={displayedCountry} />
+      <Display displayedCountry={displayedCountry}  />
     </div>
   );
 };
