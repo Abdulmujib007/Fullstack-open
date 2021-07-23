@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Input = ({displayedCountry,handleInputChange}) => {
+const Input = ({change,handleInputChange}) => {
     return (
         <div>
-      find countries <input value={displayedCountry} onChange = {handleInputChange} /> 
+      find countries <input value={change} onChange = {handleInputChange} /> 
         </div>
     )
 }
