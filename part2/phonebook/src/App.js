@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Filter from "./components/Filter";
 import Personform from "./components/Personform";
 import Persons from "./components/Persons";
+import personAdditions from "./components/additions";
+import Notification  from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [number, setNumber] = useState("");
   const [searchBy, setSearchBy] = useState("");
+  const [errorMessage,setErrorMessage] = useState('')
 
   useEffect(() => {
-    axios.get(" http://localhost:3001/persons").then(({ data }) => {
-      setPersons(data);
-    });
+    personAdditions
+      .getAll()
+      .then((initalPersons) => setPersons(initalPersons))
+      .catch((err) => console.error(err));
   }, []);
 
   const handleNameChange = (e) => {
@@ -26,20 +29,61 @@ const App = () => {
 
   const addName = (e) => {
     e.preventDefault();
-    const compare = persons.some(
+    const compare = persons.filter(
       (value) =>
         value.name.toLocaleLowerCase() === newContent.name.toLocaleLowerCase()
     );
-    compare === true
-      ? alert("This name already exist")
-      : setPersons(persons.concat(newContent));
+    compare.length ? (
+      <>
+        {window.confirm("This name already exist,replace the old number") ===
+        true
+          ? personAdditions.update(compare[0].id, newContent).then((value) => {
+              setPersons(
+                persons.map((item) =>
+                  item.id !== compare[0].id ? item : value
+                )
+              );
+            })
+            .catch(err => {
+                setErrorMessage(`This name was already removed from the server`)
+                setTimeout(() => {
+                  setErrorMessage('')
+                },3000);
+            })
+          : ""}
+      </>
+    ) : (
+      personAdditions
+        .addMore(newContent)
+        .then((response) => 
+        {
+          setPersons(persons.concat(response))
+          setErrorMessage(`Added  ${response.name}` 
+          )
+          setTimeout(() => {
+             setErrorMessage('')
+          }, 3000);
+        })
+    );
     setNewName("");
     setNumber("");
+  };
+  const handleDelete = (uniqueid) => {
+    if (
+      window.confirm(
+        `Delete ${persons.filter(({ id }) => uniqueid === id)[0].name}`
+      ) === true
+    ) {
+      personAdditions.deletePerson(uniqueid).then((deletedVal) => {
+        setPersons(persons.filter(({ id }) => id !== uniqueid));
+      });
+    }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message = {errorMessage}/>
       <Filter searchBy={searchBy} handleSearchChange={handleSearchChange} />
       <h3>Add a new</h3>
       <Personform
@@ -50,7 +94,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons searchBy={searchBy} persons={persons} />
+      <Persons
+        searchBy={searchBy}
+        persons={persons}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 };

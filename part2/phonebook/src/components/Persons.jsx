@@ -1,6 +1,6 @@
 import React from "react";
 
-const Persons = ({ searchBy, persons }) => {
+const Persons = ({ searchBy, persons, handleDelete }) => {
   return (
     <ul>
       {searchBy
@@ -10,12 +10,14 @@ const Persons = ({ searchBy, persons }) => {
             )
             .map((value, valIndex) => (
               <li key={valIndex} style={{ listStyle: "none" }}>
-                {value.name} {value.number}
+                {value.name} {value.number}{" "}
+                {<button onClick={() => handleDelete(value.id)}>delete</button>}
               </li>
             ))
         : persons.map((value, valIndex) => (
-            <li key={valIndex} style={{ listStyle: "none",marginTop:'1rem' }}>
-              {value.name} {value.number}
+            <li key={valIndex} style={{ listStyle: "none", marginTop: "1rem" }}>
+              {value.name} {value.number}{" "}
+              {<button onClick={() => handleDelete(value.id)}>delete</button>}
             </li>
           ))}
     </ul>
