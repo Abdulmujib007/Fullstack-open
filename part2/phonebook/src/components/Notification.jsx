@@ -5,7 +5,7 @@ const Notification = ({ message }) => {
     const green = { padding: "0.5rem",
     borderTop: "2px solid lightgreen",
     borderBottom: "2px solid lightgreen",
-    color: "green",
+    color: "green",   
     marginBottom : '1rem'}
 
     const red = { padding: "0.5rem",

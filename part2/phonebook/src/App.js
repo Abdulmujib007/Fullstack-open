@@ -32,7 +32,7 @@ const App = () => {
     const compare = persons.filter(
       (value) =>
         value.name.toLocaleLowerCase() === newContent.name.toLocaleLowerCase()
-    );
+    )
     compare.length ? (
       <>
         {window.confirm("This name already exist,replace the old number") ===
