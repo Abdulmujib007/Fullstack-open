@@ -13,9 +13,10 @@ const Notification = ({ message }) => {
     borderBottom: "2px solid red",
     color: "red",
     marginBottom : '1rem'}
+    console.log(message)
   if (!message) return null;
   return (
-    <div style={ message.includes('server') ? red : green }>
+    <div style={ message.includes('Added') ? green : red }>
       {message}
     </div>
   );

@@ -45,7 +45,8 @@ const App = () => {
               );
             })
             .catch(err => {
-                setErrorMessage(`This name was already removed from the server`)
+               if(err.response.data) setErrorMessage(err.response.data.error)
+               else setErrorMessage(`This name was already removed from the server`)
                 setTimeout(() => {
                   setErrorMessage('')
                 },3000);
@@ -63,6 +64,13 @@ const App = () => {
           setTimeout(() => {
              setErrorMessage('')
           }, 3000);
+        })
+        .catch(error => {
+          console.log(error.response.data.error,typeof error.response.data.error)
+          setErrorMessage(error.response.data.error)
+          setTimeout(() => {
+            setErrorMessage('')
+         }, 3000);
         })
     );
     setNewName("");
