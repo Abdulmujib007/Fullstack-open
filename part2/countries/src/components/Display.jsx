@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import axios from "axios";
@@ -24,6 +25,7 @@ const Display = ({ displayedCountry }) => {
         })
         .catch((err) => console.error(err));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayedCountry]);
 
   const handleShow = (displayedCountryIndex) => {
